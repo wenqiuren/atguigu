@@ -4,10 +4,7 @@ package com.guli.teacher.controller;
 import com.guli.teacher.entity.EduTeacher;
 import com.guli.teacher.service.EduTeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,6 +26,16 @@ public class EduTeacherController {
     public List<EduTeacher> list(){
         List<EduTeacher> list = eduTeacherService.list(null);
         return list;
+    }
+
+    @DeleteMapping("/del/{id}")
+    public boolean delById(@PathVariable("id") String id){
+//        boolean b = eduTeacherService.removeById(id);
+//        return b;
+        EduTeacher eduTeacher = eduTeacherService.getById(id);
+        eduTeacher.setIsDeleted(1);
+        boolean update = eduTeacherService.saveOrUpdate(eduTeacher);
+        return update;
     }
 }
 
